@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAI AI - Your Personal Digital Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Dark Mode */
+        :root {
+            --primary: #3B82F6;
+            --primary-dark: #1E40AF;
+            --secondary: #8B5CF6;
+            --dark-bg: #0F172A;
+            --dark-card: #1E293B;
+            --light-bg: #F8FAFC;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2a4a 100%);
+            color: white;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2a4a 100%);
+            color: white;
+            padding: 80px 2rem;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Features */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #1E293B;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #1E293B;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #64748B;
+            font-size: 14px;
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--light-bg);
+            padding: 60px 2rem;
+            text-align: center;
+        }
+
+        .pricing-cards {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .price-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .price-card.featured {
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .price-tag {
+            font-size: 36px;
+            color: var(--primary);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .price-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .price-list li {
+            list-style: none;
+            padding: 8px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .price-list li:before {
+            content: "✓ ";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Setup Guide */
+        .setup {
+            background: white;
+            padding: 60px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .setup-steps {
+            margin-top: 40px;
+        }
+
+        .step {
+            background: var(--light-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .step h3 {
+            color: #1E293B;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #64748B;
+        }
+
+        .code-block {
+            background: #1E293B;
+            color: #E2E8F0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: white;
+            padding: 40px 2rem;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            header nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+
+            .price-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">🤖 JAI AI</div>
+            <div>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#setup">Setup</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🎤 JAI AI - Your Personal Digital Assistant</h1>
+        <p>Voice-to-Voice AI Agent | Multi-Language Support | 15+ Powerful Features</p>
+        <p style="font-size: 14px; margin-top: 10px;">Available in English, Hinglish & Hindi</p>
+        <button class="btn-primary" style="margin-top: 20px;">Get Started Free</button>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <h2 class="section-title">Powerful Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎤</div>
+                <h3>Voice-to-Voice</h3>
+                <p>Speak naturally and get voice responses. Perfect for hands-free interaction.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>AI Chatbot</h3>
+                <p>Natural conversations in English, Hinglish, and Hindi. Context-aware responses.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✉️</div>
+                <h3>Email Automation</h3>
+                <p>Generate, compose, and manage emails automatically with AI assistance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>Content Writing</h3>
+                <p>Blog posts, articles, social media content - AI-powered creation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Translation</h3>
+                <p>Translate between 25+ languages instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Code Generation</h3>
+                <p>Generate code in Python, JavaScript, HTML, SQL and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Data Entry</h3>
+                <p>Automated data extraction and form filling.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Web Research</h3>
+                <p>Real-time information gathering and analysis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics</h3>
+                <p>Data analysis and report generation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Task Manager</h3>
+                <p>Organize tasks, set reminders, manage schedules.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Scheduling</h3>
+                <p>Calendar management and meeting scheduling.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Workflow Automation</h3>
+                <p>Automate repetitive tasks and create custom workflows.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">Simple Pricing</h2>
+        <div class="pricing-cards">
+            <div class="price-card">
+                <h3>Free</h3>
+                <div class="price-tag">₹0/month</div>
+                <p>Perfect to get started</p>
+                <ul class="price-list">
+                    <li>5 features</li>
+                    <li>100 requests/day</li>
+                    <li>Community support</li>
+                    <li>Hinglish support</li>
+                </ul>
+                <button class="btn-primary" style="width: 100%;">Start Free</button>
+            </div>
+            <div class="price-card featured">
+                <div style="color: var(--primary); font-size: 12px;">MOST POPULAR</div>
+                <h3>Pro</h3>
+                <div class="price-tag">₹499/month</div>
+                <p>For power users</p>
+                <ul class="price-list">
+                    <li>All 15 features</li>
+                    <li>Unlimited requests</li>
+                    <li>Email support</li>
+                    <li>Multi-language</li>
+                    <li>Priority access</li>
+                </ul>
+                <button class="btn-primary" style="width: 100%;">Upgrade Now</button>
+            </div>
+            <div class="price-card">
+                <h3>Business</h3>
+                <div class="price-tag">₹1,999/month</div>
+                <p>For teams</p>
+                <ul class="price-list">
+                    <li>All 15+ features</li>
+                    <li>Unlimited everything</li>
+                    <li>Phone support</li>
+                    <li>Custom integrations</li>
+                    <li>API access</li>
+                </ul>
+                <button class="btn-primary" style="width: 100%;">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Guide -->
+    <section class="setup" id="setup">
+        <h2 class="section-title">Setup Guide - 3 Easy Steps</h2>
+        <div class="setup-steps">
+            <div class="step">
+                <h3>Step 1: Download JAI AI Code</h3>
+                <p>Download the JAI_AI_COMPLETE_SYSTEM.jsx file from the download link provided.</p>
+                <div class="code-block">
+# Save the file in your project folder
+JAI_AI_COMPLETE_SYSTEM.jsx
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Create React App</h3>
+                <p>If you don't have a React app, create one using Vite (fastest):</p>
+                <div class="code-block">
+npm create vite@latest jai-ai-app -- --template react
+cd jai-ai-app
+npm install
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Add JAI AI Component</h3>
+                <p>Replace your App.jsx with the JAI AI code:</p>
+                <div class="code-block">
+# Copy the JAI_AI_COMPLETE_SYSTEM.jsx content
+# Paste it into: src/App.jsx
+# Save and run:
+npm run dev
+
+# Your JAI AI will be live on: http://localhost:5173
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 4: Deploy Free (Vercel)</h3>
+                <p>Deploy for free on Vercel in 2 minutes:</p>
+                <div class="code-block">
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel
+
+# Follow the prompts - your app is live!
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Optional: Connect to Real AI (Anthropic API)</h3>
+                <p>For full AI capabilities, add your Anthropic API key:</p>
+                <div class="code-block">
+1. Get API key from: https://console.anthropic.com
+2. Add to your .env file: VITE_ANTHROPIC_KEY=your_key_here
+3. Update the response logic in JAI_AI_COMPLETE_SYSTEM.jsx
+4. Redeploy!
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 20px; border-radius: 8px; margin-top: 40px;">
+            <h3 style="color: #92400E;">💡 Need Help?</h3>
+            <p style="color: #B45309;">Contact our support team at support@jai-ai.dev</p>
+            <p style="color: #B45309; font-size: 14px; margin-top: 10px;">Join our community: discord.gg/jai-ai</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 JAI AI. All rights reserved. | Made with ❤️ for Pakistan</p>
+        <p style="margin-top: 10px; font-size: 14px;">Privacy Policy | Terms of Service | Contact Us</p>
+    </footer>
+</body>
+</html>
